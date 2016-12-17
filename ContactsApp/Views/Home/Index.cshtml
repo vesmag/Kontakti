@@ -1,51 +1,126 @@
 ﻿<!DOCTYPE html>
-<html ng-app="ContactsApp" ng-controller="myController">
+<html ng-app="ContactsApp" ng-controller="myController" data-ng-init="createDB()">
 <head>
     <meta charset="utf-8" />
     <title ng-bind="name"></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/Site.css" />
+    @*Styles.Render("~/Content/css")*@
 </head>
 <body>
+    <h1>Kontakti</h1>
     <div>
-        Pretraži! Pretraga po:
-        <select data-ng-model="searchOption">
-            <option value="SearchByName">Ime</option>
-            <option value="SearchBySurname">Prezime</option>
-            <option value="SearchByTag">Tag</option>
-        </select>
-        <input data-ng-model="searchString" />
-        <button data-ng-click="searchContact(searchOption, searchString)">Pretraži</button>
+        <div class="search">
+            Pretraži! Pretraga po:
+            <select data-ng-model="searchOption">
+                <option value="SearchByName">Ime</option>
+                <option value="SearchBySurname">Prezime</option>
+                <option value="SearchByTag">Tag</option>
+            </select>
+            <input data-ng-model="searchString" />
+            <button ng-disabled="!searchOption || !searchString" data-ng-click="filteringMode = true; searchContact(searchOption, searchString)">
+                <img src="~/Resources/Icon_search.ico" />
+            </button>
+            <button ng-show="filteringMode" data-ng-click="filteringMode = false;">Poništi pretragu</button>
+        </div>
+        <div class="table_div">
+            <table id="contactsTable" class="table table-striped table-hover">
+                <tr>
+                    <th>Ime</th>
+                    <th>Prezime</th>
+                    <th>Adresa</th>
+                    <th>E-mail</th>
+                    <th>Broj telefona</th>
+                    <th>Tagovi</th>
+                    <th>Uredi</th>
+                    <th>Obriši</th>
+                </tr>
+                <tr data-ng-hide="filteringMode" data-ng-repeat="contact in contacts">
+                    <td ng-hide="editMode">{{contact.Name}}</td>
+                    <td ng-show="editMode"><input class="text_box" type="text" ng-model="contact.Name"></td>
+                    <td ng-hide="editMode">{{contact.Surname}}</td>
+                    <td ng-show="editMode"><input class="text_box" type="text" ng-model="contact.Surname"></td>
+                    <td ng-hide="editMode">{{contact.Address}}</td>
+                    <td ng-show="editMode"><input class="text_box" type="text" ng-model="contact.Address"></td>
+                    <td ng-hide="editMode">{{contact.Email}}</td>
+                    <td ng-show="editMode"><input class="text_box" type="text" ng-model="contact.Email"></td>
+                    <td ng-hide="editMode">{{contact.Telephone}}</td>
+                    <td ng-show="editMode"><input class="text_box" type="text" ng-model="contact.Telephone"></td>
+                    <td ng-hide="editMode">{{contact.Tags}}</td>
+                    <td ng-show="editMode"><input class="text_box" type="text" ng-model="contact.Tags"></td>
+                    <td ng-hide="editMode">
+                        <button data-ng-click="editMode = true">
+                            <img src="~/Resources/Icon_edit.ico" />
+                        </button>
+                    </td>
+                    <td ng-hide="editMode">
+                        <button data-ng-click="deleteContact(contact.Id)">
+                            <img src="~/Resources/Icon_delete.ico" />
+                        </button>
+                    </td>
+                    <td colspan="2" ng-show="editMode">
+                        <button data-ng-click="editMode = false; updateContact(contact)">
+                            <img src="~/Resources/Icon_save.ico" />
+                        </button>
+                    </td>
+                </tr>
+                <tr data-ng-show="filteringMode" data-ng-repeat="contact in filteredContacts">
+                    <td ng-hide="editMode">{{contact.Name}}</td>
+                    <td ng-show="editMode"><input type="text" ng-model="contact.Name"></td>
+                    <td ng-hide="editMode">{{contact.Surname}}</td>
+                    <td ng-show="editMode"><input type="text" ng-model="contact.Surname"></td>
+                    <td ng-hide="editMode">{{contact.Address}}</td>
+                    <td ng-show="editMode"><input type="text" ng-model="contact.Address"></td>
+                    <td ng-hide="editMode">{{contact.Email}}</td>
+                    <td ng-show="editMode"><input type="text" ng-model="contact.Email"></td>
+                    <td ng-hide="editMode">{{contact.Telephone}}</td>
+                    <td ng-show="editMode"><input type="text" ng-model="contact.Telephone"></td>
+                    <td ng-hide="editMode">{{contact.Tags}}</td>
+                    <td ng-show="editMode"><input type="text" ng-model="contact.Tags"></td>
+                    <td ng-hide="editMode">
+                        <button data-ng-click="editMode = true">
+                            <img src="~/Resources/Icon_edit.ico" />
+                        </button>
+                    </td>
+                    <td ng-hide="editMode">
+                        <button data-ng-click="deleteContact(contact.Id)">
+                            <img src="~/Resources/Icon_delete.ico" />
+                        </button>
+                    </td>
+                    <td>
+                        <button ng-show="editMode" data-ng-click="editMode = false; updateContact(contact)">
+                            <img src="~/Resources/Icon_save.ico" />
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="8" class="add_tr">
+                        <button ng-hide="addMode" ng-click="addMode = true">
+                            <img src="~/Resources/Icon_add.ico" />  Dodaj novi kontakt
+                        </button>
+                    </td>
+                </tr>
+                <tr ng-show="addMode">
+                    <td><input class="text_box" type="text" ng-model="newContact.Name" /></td>
+                    <td><input class="text_box" type="text" ng-model="newContact.SurName" /></td>
+                    <td><input class="text_box" type="text" ng-model="newContact.Address" /></td>
+                    <td><input class="text_box" type="text" ng-model="newContact.Email" /></td>
+                    <td><input class="text_box" type="text" ng-model="newContact.Telephone" /></td>
+                    <td><input class="text_box" type="text" ng-model="newContact.Tags" /></td>
+                    <td>
+                        <button ng-click="addMode = false; addContact(newContact)">
+                            <img src="~/Resources/Icon_save.ico" />
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
-    <table id="contactsTable">
-        <tr>
-            <th>Ime</th>
-            <th>Prezime</th>
-            <th>Adresa</th>
-            <th>E-mail</th>
-            <th>Broj telefona</th>
-            <th>Tagovi</th>
-        </tr>
-        <tr data-ng-repeat="contact in contacts">
-            <td ng-hide="editMode">{{contact.Name}}</td>
-            <td ng-show="editMode"><input type="text" ng-model="contact.Name"></td>
-            <td ng-hide="editMode">{{contact.Surname}}</td>
-            <td ng-show="editMode"><input type="text" ng-model="contact.Surname"></td>
-            <td ng-hide="editMode">{{contact.Address}}</td>
-            <td ng-show="editMode"><input type="text" ng-model="contact.Address"></td>
-            <td ng-hide="editMode">{{contact.Email}}</td>
-            <td ng-show="editMode"><input type="text" ng-model="contact.Email"></td>
-            <td ng-hide="editMode">{{contact.Telephone}}</td>
-            <td ng-show="editMode"><input type="text" ng-model="contact.Telephone"></td>
-            <td ng-hide="editMode">{{contact.Tags}}</td>
-            <td ng-show="editMode"><input type="text" ng-model="contact.Tags"></td>
-            <td ng-hide="editMode"><button data-ng-click="editMode = true">Edit</button></td>
-            <td ng-hide="editMode"><button data-ng-click="deleteContact(contact.Id)">Delete</button></td>
-            <td><button ng-show="editMode" data-ng-click="editMode = false; updateContact(contact)">Save</button></td>
-        </tr>
-    </table>
-
-    <div>Tražim po {{searchOption}}, a string je {{searchString}}</div>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.min.js"></script>
     @Scripts.Render("~/bundles/ContactsApp")
+
 </body>
 </html>

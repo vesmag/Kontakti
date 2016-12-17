@@ -53,23 +53,51 @@ namespace ContactsApp.Controllers
             }
         }
 
-        public string updateContact (int ConId, string ConName, string ConSurname, string ConAddress, string ConEmail, string ConTel, string ConTags)
+        public string updateContact (Contact Con)
         {
             using (ContactDBEntities contactsData = new ContactDBEntities())
             {
-                int id_int = Convert.ToInt32(ConId);
+                int id_int = Convert.ToInt32(Con.Id);
                 var toBeUpdated = contactsData.Contacts.Where(x => x.Id == id_int).FirstOrDefault();
-                toBeUpdated.Name = ConName;
-                toBeUpdated.Surname = ConSurname;
-                toBeUpdated.Address = ConAddress;
-                toBeUpdated.Email = ConEmail;
-                toBeUpdated.Telephone = ConTel;
-                toBeUpdated.Tags = ConTags;
+                toBeUpdated.Name = Con.Name;
+                toBeUpdated.Surname = Con.Surname;
+                toBeUpdated.Address = Con.Address;
+                toBeUpdated.Email = Con.Email;
+                toBeUpdated.Telephone = Con.Telephone;
+                toBeUpdated.Tags = Con.Tags;
                 contactsData.SaveChanges();
                 return "Contact updated.";
             }
         }
 
+        public JsonResult searchByName (string searchString)
+        {
+            using (ContactDBEntities contactsData = new ContactDBEntities())
+            {
+                var filteredList = contactsData.Contacts.Where(x => x.Name.IndexOf(searchString)>-1).ToList();
+                return Json(filteredList, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult searchBySurname(string searchString)
+        {
+            Debug.WriteLine(searchString);
+            using (ContactDBEntities contactsData = new ContactDBEntities())
+            {
+                var filteredList = contactsData.Contacts.Where(x => x.Surname.IndexOf(searchString) > -1).ToList();
+                Debug.WriteLine(filteredList);
+                return Json(filteredList, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult searchByTag(string searchString)
+        {
+            using (ContactDBEntities contactsData = new ContactDBEntities())
+            {
+                var filteredList = contactsData.Contacts.Where(x => x.Tags.IndexOf(searchString) > -1).ToList();
+                return Json(filteredList, JsonRequestBehavior.AllowGet);
+            }
+        }
         public string fillDB ()
         {
             using (ContactDBEntities contactsData = new ContactDBEntities())

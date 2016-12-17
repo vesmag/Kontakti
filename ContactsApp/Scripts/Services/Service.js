@@ -1,6 +1,16 @@
 ﻿var myService = function ($http) {
+    this.databaseFilled = false;
+
+    this.create_DB = function () {
+        if (this.databaseFilled === false) {
+            this.databaseFilled = true;
+            return $http.get('/Home/fillDB');
+        }           
+        else
+            return "Database already filled.";
+    }
+
     this.get_Contacts = function () {
-        debugger;
         return $http.get('/Home/getAll')
     }
 
@@ -21,16 +31,51 @@
         return $http({
             method : 'post',
             url : '/Home/updateContact',
-            params: {
-                ConId : Con.Id,
-                ConName: Con.Name,
-                ConSurname: Con.Surname,
-                ConAddress: Con.Address,
-                ConEmail: Con.Email,
-                ConTelephone: Con.Telephone,
-                ConTags: Con.Tags
-            }
+            data: JSON.stringify(Con),
+            dataType: "json"
         })
+    }
+
+    this.name_Search = function (searchString) {
+        console.log(searchString);
+        return $http({
+            method: 'get',
+            url: '/Home/searchByName',
+            params: {
+                searchString: searchString
+            }
+        });
+    }
+
+    this.surname_Search = function (searchString) {
+        console.log(searchString);
+        return $http({
+            method: 'get',
+            url: '/Home/searchBySurname',
+            params: {
+                searchString: searchString
+            }
+        });
+    }
+
+    this.tag_Search = function (searchString) {
+        console.log(searchString);
+        return $http({
+            method: 'get',
+            url: '/Home/searchByTag',
+            params: {
+                searchString: searchString
+            }
+        });
+    }
+
+    this.add_Contact = function (Con) {
+        return $http({
+            method : 'post',
+            url : '/Home/addContact',
+            data: JSON.stringify(Con),
+            dataType: "json"
+        });
     }
 }
 
