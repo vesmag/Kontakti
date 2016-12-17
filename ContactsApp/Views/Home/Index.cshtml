@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html ng-app="ContactsApp" ng-controller="myController">
+<head>
+    <meta charset="utf-8" />
+    <title ng-bind="name"></title>
+</head>
+<body>
+    <div>
+        Pretraži! Pretraga po:
+        <select data-ng-model="searchOption">
+            <option value="SearchByName">Ime</option>
+            <option value="SearchBySurname">Prezime</option>
+            <option value="SearchByTag">Tag</option>
+        </select>
+        <input data-ng-model="searchString" />
+        <button data-ng-click="searchContact(searchOption, searchString)">Pretraži</button>
+    </div>
+    <table id="contactsTable">
+        <tr>
+            <th>Ime</th>
+            <th>Prezime</th>
+            <th>Adresa</th>
+            <th>E-mail</th>
+            <th>Broj telefona</th>
+            <th>Tagovi</th>
+        </tr>
+        <tr data-ng-repeat="contact in contacts">
+            <td ng-hide="editMode">{{contact.Name}}</td>
+            <td ng-show="editMode"><input type="text" ng-model="contact.Name"></td>
+            <td ng-hide="editMode">{{contact.Surname}}</td>
+            <td ng-show="editMode"><input type="text" ng-model="contact.Surname"></td>
+            <td ng-hide="editMode">{{contact.Address}}</td>
+            <td ng-show="editMode"><input type="text" ng-model="contact.Address"></td>
+            <td ng-hide="editMode">{{contact.Email}}</td>
+            <td ng-show="editMode"><input type="text" ng-model="contact.Email"></td>
+            <td ng-hide="editMode">{{contact.Telephone}}</td>
+            <td ng-show="editMode"><input type="text" ng-model="contact.Telephone"></td>
+            <td ng-hide="editMode">{{contact.Tags}}</td>
+            <td ng-show="editMode"><input type="text" ng-model="contact.Tags"></td>
+            <td ng-hide="editMode"><button data-ng-click="editMode = true">Edit</button></td>
+            <td ng-hide="editMode"><button data-ng-click="deleteContact(contact.Id)">Delete</button></td>
+            <td><button ng-show="editMode" data-ng-click="editMode = false; updateContact(contact)">Save</button></td>
+        </tr>
+    </table>
+
+    <div>Tražim po {{searchOption}}, a string je {{searchString}}</div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.min.js"></script>
+    @Scripts.Render("~/bundles/ContactsApp")
+</body>
+</html>
