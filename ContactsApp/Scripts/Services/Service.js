@@ -1,13 +1,18 @@
-﻿var myService = function ($http) {
-    this.databaseFilled = false;
+﻿ContactsApp.service("myService", function ($http) {
+
+    this.get_Contact_By_Id = function (ConId) {
+        return $http({
+            method: 'get',
+            url: '/Home/getContactById',
+            params: {
+                ConId: ConId
+            }
+        });
+
+    }
 
     this.create_DB = function () {
-        if (this.databaseFilled === false) {
-            this.databaseFilled = true;
-            return $http.get('/Home/fillDB');
-        }           
-        else
-            return "Database already filled.";
+        return $http.get('/Home/fillDB');
     }
 
     this.get_Contacts = function () {
@@ -15,7 +20,6 @@
     }
 
     this.delete_Contact = function (ConId) {
-        console.log(ConId);
         return $http({
             method : 'post',
             url : '/Home/deleteContact',
@@ -27,7 +31,6 @@
     }
 
     this.update_Contact = function (Con) {
-        console.log(Con);
         return $http({
             method : 'post',
             url : '/Home/updateContact',
@@ -36,33 +39,10 @@
         })
     }
 
-    this.name_Search = function (searchString) {
-        console.log(searchString);
+    this.search = function (searchString) {
         return $http({
             method: 'get',
-            url: '/Home/searchByName',
-            params: {
-                searchString: searchString
-            }
-        });
-    }
-
-    this.surname_Search = function (searchString) {
-        console.log(searchString);
-        return $http({
-            method: 'get',
-            url: '/Home/searchBySurname',
-            params: {
-                searchString: searchString
-            }
-        });
-    }
-
-    this.tag_Search = function (searchString) {
-        console.log(searchString);
-        return $http({
-            method: 'get',
-            url: '/Home/searchByTag',
+            url: '/Home/search',
             params: {
                 searchString: searchString
             }
@@ -77,6 +57,4 @@
             dataType: "json"
         });
     }
-}
-
-myService.$inject = ['$http'];
+});

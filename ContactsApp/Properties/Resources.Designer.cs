@@ -61,46 +61,6 @@ namespace ContactsApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] AndikaNewBasic_B {
-            get {
-                object obj = ResourceManager.GetObject("AndikaNewBasic_B", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] AndikaNewBasic_BI {
-            get {
-                object obj = ResourceManager.GetObject("AndikaNewBasic_BI", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] AndikaNewBasic_I {
-            get {
-                object obj = ResourceManager.GetObject("AndikaNewBasic_I", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] AndikaNewBasic_R {
-            get {
-                object obj = ResourceManager.GetObject("AndikaNewBasic_R", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         internal static System.Drawing.Icon Icon_add {
@@ -136,6 +96,16 @@ namespace ContactsApp.Properties {
         internal static System.Drawing.Icon Icon_edit {
             get {
                 object obj = ResourceManager.GetObject("Icon_edit", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon Icon_info {
+            get {
+                object obj = ResourceManager.GetObject("Icon_info", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }

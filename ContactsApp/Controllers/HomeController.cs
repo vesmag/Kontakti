@@ -10,25 +10,40 @@ namespace ContactsApp.Controllers
 {
     public class HomeController : Controller
     {
+        // GET: Home
         public ActionResult Index()
         {
             return View();
         }
+        
+        //vraca iz baze kontakt sa zadanim id-em
+        public JsonResult getContactById(int ConId)
+        {
+            using (ContactsDBEntities contactsData = new ContactsDBEntities())
+            {
+                var tempContact = contactsData.Contacts.Where(x => x.Id == ConId).Single();
+                return Json(tempContact, JsonRequestBehavior.AllowGet);
 
+            }
+
+        }
+
+        //vraca listu svih kontakata iz baze
         public JsonResult getAll()
         {
-            using (ContactDBEntities contactsData = new ContactDBEntities())
+            using (ContactsDBEntities contactsData = new ContactsDBEntities())
             {
                 var contactList = contactsData.Contacts.ToList();
                 return Json(contactList, JsonRequestBehavior.AllowGet);
             }
         }
-
+        
+        //funkcija dodaje kontakt u bazu
         public string addContact(Contact Con)
         {
             if (Con != null)
             {
-                using (ContactDBEntities contactsData = new ContactDBEntities())
+                using (ContactsDBEntities contactsData = new ContactsDBEntities())
                 {
                     contactsData.Contacts.Add(Con);
                     contactsData.SaveChanges();
@@ -41,71 +56,77 @@ namespace ContactsApp.Controllers
             }
         }
 
-        public string deleteContact (int ConId)
+        //brisanje kontakta iz baze
+        public string deleteContact(int ConId)
         {
-            using (ContactDBEntities contactsData = new ContactDBEntities())
+            using (ContactsDBEntities contactsData = new ContactsDBEntities())
             {
-                int id_int = Convert.ToInt32(ConId);
-                var contactById = contactsData.Contacts.Where(x => x.Id == id_int).FirstOrDefault();
-                contactsData.Contacts.Remove(contactById);
-                contactsData.SaveChanges();
-                return "Contact deleted.";
+                var contactById = contactsData.Contacts.Where(x => x.Id == ConId).Single();
+                if (contactById != null)
+                {
+                    contactsData.Contacts.Remove(contactById);
+                    contactsData.SaveChanges();
+                    return "Contact deleted.";
+                }
+                else
+                {
+                    return "Contact not in database";
+                }
             }
         }
 
-        public string updateContact (Contact Con)
+        //funckija prima objekt Contact kojim zamijenjuje trenutni objekt u bazi s tim id-em
+        public string updateContact(Contact Con)
         {
-            using (ContactDBEntities contactsData = new ContactDBEntities())
+            using (ContactsDBEntities contactsData = new ContactsDBEntities())
             {
                 int id_int = Convert.ToInt32(Con.Id);
-                var toBeUpdated = contactsData.Contacts.Where(x => x.Id == id_int).FirstOrDefault();
-                toBeUpdated.Name = Con.Name;
-                toBeUpdated.Surname = Con.Surname;
-                toBeUpdated.Address = Con.Address;
-                toBeUpdated.Email = Con.Email;
-                toBeUpdated.Telephone = Con.Telephone;
-                toBeUpdated.Tags = Con.Tags;
-                contactsData.SaveChanges();
-                return "Contact updated.";
+                var toBeUpdated = contactsData.Contacts.Where(x => x.Id == id_int).Single();
+                if (toBeUpdated != null)
+                {
+                    toBeUpdated.Name = Con.Name;
+                    toBeUpdated.Surname = Con.Surname;
+                    toBeUpdated.Address = Con.Address;
+                    toBeUpdated.Email = Con.Email;
+                    toBeUpdated.Telephone = Con.Telephone;
+                    toBeUpdated.Tags = Con.Tags;
+                    contactsData.SaveChanges();
+                    return "Contact updated.";
+                }
+                else
+                {
+                    return "Contact not found.";
+                }
             }
         }
 
-        public JsonResult searchByName (string searchString)
+        //trazi kontakte po imenu, prezimenu i tagovima te vracaju filtriranu listu
+        //onih kontakata koji kao substring imena/prezimena/tagova imaju searchString
+        public JsonResult search(string searchString)
         {
-            using (ContactDBEntities contactsData = new ContactDBEntities())
+            using (ContactsDBEntities contactsData = new ContactsDBEntities())
             {
-                var filteredList = contactsData.Contacts.Where(x => x.Name.IndexOf(searchString)>-1).ToList();
+                var filteredList1 = contactsData.Contacts.Where(x => x.Name.IndexOf(searchString) > -1).ToList();
+                var filteredList2 = contactsData.Contacts.Where(x => x.Surname.IndexOf(searchString) > -1).ToList();
+                var filteredList3 = contactsData.Contacts.Where(x => x.Tags.IndexOf(searchString) > -1).ToList();
+                var filteredList = filteredList1;
+                filteredList.AddRange(filteredList2);
+                filteredList.AddRange(filteredList3);
                 return Json(filteredList, JsonRequestBehavior.AllowGet);
             }
         }
 
-        public JsonResult searchBySurname(string searchString)
+        //funkcija popunjava bazu
+        //ne koristi se, potrebna je samo za pocetno popunjavanje baze
+        public string fillDB()
         {
-            Debug.WriteLine(searchString);
-            using (ContactDBEntities contactsData = new ContactDBEntities())
-            {
-                var filteredList = contactsData.Contacts.Where(x => x.Surname.IndexOf(searchString) > -1).ToList();
-                Debug.WriteLine(filteredList);
-                return Json(filteredList, JsonRequestBehavior.AllowGet);
-            }
-        }
-
-        public JsonResult searchByTag(string searchString)
-        {
-            using (ContactDBEntities contactsData = new ContactDBEntities())
-            {
-                var filteredList = contactsData.Contacts.Where(x => x.Tags.IndexOf(searchString) > -1).ToList();
-                return Json(filteredList, JsonRequestBehavior.AllowGet);
-            }
-        }
-        public string fillDB ()
-        {
-            using (ContactDBEntities contactsData = new ContactDBEntities())
+            using (ContactsDBEntities contactsData = new ContactsDBEntities())
             {
                 contactsData.Database.ExecuteSqlCommand("TRUNCATE TABLE [Contacts]");
             }
-            
-            Contact Con1 = new Contact {
+
+            Contact Con1 = new Contact
+            {
                 Name = "Ana",
                 Surname = "Anić",
                 Address = "Amruševa 99",
@@ -217,7 +238,4 @@ namespace ContactsApp.Controllers
             return "OK";
         }
     }
-
-   
-
 }

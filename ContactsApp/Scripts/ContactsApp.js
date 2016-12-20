@@ -1,4 +1,14 @@
-﻿var ContactsApp = angular.module('ContactsApp', []);
+﻿var ContactsApp = angular.module("ContactsApp", ['ngRoute']);
 
-ContactsApp.controller('myController', myController);
-ContactsApp.service('myService', myService);
+
+ContactsApp.config(function ($routeProvider) {
+    $routeProvider
+         .when('/all', {
+             controller: 'allController',
+             templateUrl: 'Partials/All'
+         })
+        .when('/contact/:id', {
+            controller: 'contactController',
+            templateUrl: 'Partials/Contact'
+        })
+});

@@ -13,10 +13,10 @@ namespace ContactsApp.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ContactDBEntities : DbContext
+    public partial class ContactsDBEntities : DbContext
     {
-        public ContactDBEntities()
-            : base("name=ContactDBEntities")
+        public ContactsDBEntities()
+            : base("name=ContactsDBEntities")
         {
         }
     
