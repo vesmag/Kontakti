@@ -9,7 +9,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{A561014D-CB36-4DA6-93C0-23D1B194A9B8}</ProjectGuid>
+    <ProjectGuid>{9A029590-767B-462A-9200-E19768C03970}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -113,15 +113,14 @@
       <LastGenOutput>ContactsModel.cs</LastGenOutput>
     </Content>
     <None Include="Resources\Icon_edit.ico" />
+    <None Include="Resources\Icon_info.ico" />
     <None Include="Resources\Icon_save.ico" />
     <None Include="Resources\Icon_search.ico" />
     <None Include="Resources\Icon_add.ico" />
-    <None Include="Resources\Icon_addContact.ico" />
     <None Include="Resources\Icon_delete.ico" />
-    <None Include="Resources\Icon_info.ico" />
     <Content Include="Scripts\ContactsApp.js" />
-    <Content Include="Scripts\Controllers\contactController.js" />
     <Content Include="Scripts\Controllers\allController.js" />
+    <Content Include="Scripts\Controllers\contactController.js" />
     <Content Include="Scripts\Services\Service.js" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -150,6 +149,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ContactsModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Email.cs">
+      <DependentUpon>ContactsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tag.cs">
+      <DependentUpon>ContactsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Telephone.cs">
+      <DependentUpon>ContactsModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -160,8 +168,6 @@
   <ItemGroup>
     <Content Include="Views\web.config" />
     <Content Include="packages.config" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Partials\All.cshtml" />
     <EntityDeploy Include="Models\ContactsModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ContactsModel.Designer.cs</LastGenOutput>
@@ -169,6 +175,8 @@
     <Content Include="Models\ContactsModel.edmx.diagram">
       <DependentUpon>ContactsModel.edmx</DependentUpon>
     </Content>
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Partials\All.cshtml" />
     <Content Include="Views\Partials\Contact.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -199,9 +207,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>56105</DevelopmentServerPort>
+          <DevelopmentServerPort>53128</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:56105/</IISUrl>
+          <IISUrl>http://localhost:53128/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

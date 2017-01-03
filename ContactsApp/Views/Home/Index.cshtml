@@ -2,11 +2,12 @@
 <html data-ng-app="ContactsApp">
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Kontakti</title>
+    <title>Index</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular-route.js"></script>
+    @*@Scripts.Render("~/bundles/ContactsApp")*@
     <script src="~/Scripts/ContactsApp.js"></script>
     <script src="~/Scripts/Services/Service.js"></script>
     <script src="~/Scripts/Controllers/allController.js"></script>
@@ -16,7 +17,7 @@
 </head>
 <body>
     <h1>Kontakti</h1>
-    @if (Request.Url.ToString().IndexOf("all") == -1)
+    @if (Request.Url.ToString().IndexOf("all") == -1 && Request.Url.ToString().IndexOf("contact") == -1)
     {
         <div class="table_div">
             <input class="button_all" type="button" onclick="location.href='/#/all' ;" value="Prikaži sve kontakte" />

@@ -27,7 +27,7 @@
 	width: 150px;
 	height: 30px;
 	border-radius: 5px;
-    display: inline-block;
+	display: inline-block;
 	margin-left: 25%;
 	margin-right: 25%;
 	margin-top: 10px;
@@ -48,7 +48,7 @@ h1 {
 	width: 150px;
 	height: 30px;
 	border-radius: 5px;
-    display: inline-block;
+	display: inline-block;
 	margin-left: 25%;
 	margin-right: 25%;
 	margin-top: 50px;
@@ -59,7 +59,7 @@ html, body {
 	max-width: 100%;
 	overflow-x: hidden;
 	justify-content: space-around;
-    text-align:center;
+	text-align:center;
 }
 
 table {
@@ -71,10 +71,19 @@ table {
 
 }
 
+.td-align {
+	vertical-align: middle;
+	background-color: red;
+}
+
 .td-fixedSize {
 	width: 10%;
 }
 
 .add_tr {
 	text-align: center;
+}
+
+ul {
+    list-style-type: none;
 }

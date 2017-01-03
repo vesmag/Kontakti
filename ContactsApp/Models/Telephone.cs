@@ -12,20 +12,17 @@ namespace ContactsApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Contact
+    public partial class Telephone
     {
-        public Contact() { }
-
-        public Contact (string name, string surname, string address)
+        public Telephone() { }
+        public Telephone (int id, string tel)
         {
-            Name = name;
-            Surname = surname;
-            Address = address;
+            PersonId = id;
+            Telephone1 = tel;
         }
 
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Surname { get; set; }
-        public string Address { get; set; }
+        public int EntryId { get; set; }
+        public int PersonId { get; set; }
+        public string Telephone1 { get; set; }
     }
 }

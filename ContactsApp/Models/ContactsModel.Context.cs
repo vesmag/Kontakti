@@ -26,5 +26,8 @@ namespace ContactsApp.Models
         }
     
         public DbSet<Contact> Contacts { get; set; }
+        public DbSet<Email> Emails { get; set; }
+        public DbSet<Tag> Tags { get; set; }
+        public DbSet<Telephone> Telephones { get; set; }
     }
 }

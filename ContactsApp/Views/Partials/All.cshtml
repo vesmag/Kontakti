@@ -1,6 +1,7 @@
-﻿<div>
+﻿
+<div>
     <div class="search">
-        Pretraži! 
+        Pretraži!
         <input data-ng-model="searchString" />
         <button ng-disabled="!searchString" data-ng-click="filteringMode = true; search(searchString)">
             <img src="~/Resources/Icon_search.ico" />
@@ -27,11 +28,11 @@
                 <td ng-show="editMode"><input class="text_box" type="text" ng-model="contact.Surname"></td>
                 <td ng-hide="editMode">{{contact.Address}}</td>
                 <td ng-show="editMode"><input class="text_box" type="text" ng-model="contact.Address"></td>
-                <td ng-hide="editMode">{{contact.Email}}</td>
+                <td ng-hide="editMode"><ul data-ng-repeat="em in contact.Emails"><li>{{em}}</li></ul></td>
                 <td ng-show="editMode"><input class="text_box" type="text" ng-model="contact.Email"></td>
-                <td ng-hide="editMode">{{contact.Telephone}}</td>
+                <td ng-hide="editMode"><ul data-ng-repeat="tel in contact.Telephones"><li>{{tel}}</li></ul></td>
                 <td ng-show="editMode"><input class="text_box" type="text" ng-model="contact.Telephone"></td>
-                <td ng-hide="editMode">{{contact.Tags}}</td>
+                <td ng-hide="editMode"><ul data-ng-repeat="tag in contact.Tags"><li>{{tag}}</li></ul></td>
                 <td ng-show="editMode"><input class="text_box" type="text" ng-model="contact.Tags"></td>
                 <td ng-hide="editMode">
                     <button ng-click="getDetails(contact)">
@@ -67,7 +68,7 @@
                 <td ng-show="editMode"><input class="text_box" type="text" ng-model="contact.Telephone"></td>
                 <td ng-hide="editMode">{{contact.Tags}}</td>
                 <td ng-show="editMode"><input class="text_box" type="text" ng-model="contact.Tags"></td>
-                <td  ng-hide="editMode">
+                <td ng-hide="editMode">
                     <button ng-click="getDetails(contact)">
                         <img src="~/Resources/Icon_info.ico" />
                     </button>
@@ -96,13 +97,13 @@
                 </td>
             </tr>
             <tr ng-show="addMode">
-                <td><input class="text_box" type="text" ng-model="newContact.Name" /></td>
-                <td><input class="text_box" type="text" ng-model="newContact.SurName" /></td>
-                <td><input class="text_box" type="text" ng-model="newContact.Address" /></td>
-                <td><input class="text_box" type="text" ng-model="newContact.Email" /></td>
-                <td><input class="text_box" type="text" ng-model="newContact.Telephone" /></td>
-                <td><input class="text_box" type="text" ng-model="newContact.Tags" /></td>
-                <td>
+                <td style="vertical-align:middle">Ime: <input class="text_box" type="text" ng-model="newContact.Name" /></td>
+                <td style="vertical-align:middle">Prezime: <input class="text_box" type="text" ng-model="newContact.SurName" /></td>
+                <td style="vertical-align:middle">Adresa: <input class="text_box" type="text" ng-model="newContact.Address" /></td>
+                <td>E-mail (ako ih je više, odvojiti zarezom): <input class="text_box" type="text" ng-model="newContact.Email" /></td>
+                <td>Broj telefona (ako ih je više, odvojiti zarezom): <input class="text_box" type="text" ng-model="newContact.Telephone" /></td>
+                <td>Tagovi (ako ih je više, odvojiti zarezom): <input class="text_box" type="text" ng-model="newContact.Tags" /></td>
+                <td style="vertical-align:middle">
                     <button ng-click="addMode = false; addContact(newContact)">
                         <img src="~/Resources/Icon_save.ico" />
                     </button>
