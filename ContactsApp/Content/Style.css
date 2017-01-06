@@ -13,12 +13,13 @@
 	margin-left: 25%;
 	margin-right: 25%;
 	margin-top: 10px;
+	margin-bottom: 10px;
 	height: 50px;
 	padding-bottom: 15px;
 	padding-top: 15px;
 	padding-left: 10px;
 	padding-right: 10px;
-	width: 600px;
+	width: 50%;
 	border-radius: 10px;
 
 }
@@ -49,26 +50,36 @@ h1 {
 	height: 30px;
 	border-radius: 5px;
 	display: inline-block;
-	margin-left: 25%;
-	margin-right: 25%;
+	margin-left: auto;
+	margin-right: auto;
 	margin-top: 50px;
 }
 
 html, body {
 	font-family: Kalinga;
 	max-width: 100%;
-	overflow-x: hidden;
 	justify-content: space-around;
 	text-align:center;
 }
 
-table {
-	margin: 10px auto;
-	width: 50%;
+.allContactsTable {
+	margin: 2px;
+	width: 100%;
 	display: inline-table;
 	float: none;
 	border-radius: 10px;
+}
 
+.oneContactTable {
+	margin: 10px auto;
+	width: 500px;
+	display: inline-table;
+	float: none;
+	border-radius: 10px;
+}
+
+.listTable {
+	display: inline-table;
 }
 
 .td-align {
@@ -84,6 +95,25 @@ table {
 	text-align: center;
 }
 
+.listTableHeader {
+	text-align: left;
+	width: 21%;
+}
+
 ul {
-    list-style-type: none;
+	list-style-type: none;
+	padding: 0px;
+}
+
+td {
+	text-align: center;
+}
+
+th {
+	text-align: center;
+}
+
+button{
+	margin-left: 5px;
+	margin-right: 5px;
 }

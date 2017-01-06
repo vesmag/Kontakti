@@ -118,6 +118,8 @@
     <None Include="Resources\Icon_search.ico" />
     <None Include="Resources\Icon_add.ico" />
     <None Include="Resources\Icon_delete.ico" />
+    <None Include="Resources\Icon_back.ico" />
+    <None Include="Resources\favicon.ico" />
     <Content Include="Scripts\ContactsApp.js" />
     <Content Include="Scripts\Controllers\allController.js" />
     <Content Include="Scripts\Controllers\contactController.js" />

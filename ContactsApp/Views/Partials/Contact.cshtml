@@ -1,29 +1,201 @@
 ﻿
 <div class="table_div">
-    <table class="table table-striped table-hover">
+    <table class="table table-striped table-hover oneContactTable">
         <tr>
-            <th>Ime</th>
-            <td>{{$root.Name}}</td>
+            <th> </th>
+            <th>Podaci</th>
+            <th>Uredi</th>
+        <tr>
+            <th class="listTableHeader">Ime</th>
+            <td ng-hide="editNameMode">{{$root.Name}}</td>
+            <td ng-show="editNameMode"><input type="text" ng-model="$root.Name" /></td>
+            <td ng-hide="editNameMode">
+                <button ng-click="editNameMode=true">
+                    <img src="~/Resources/Icon_edit.ico" />
+                </button>
+            </td>
+            <td ng-show="editNameMode">
+                <button data-ng-click="editNameMode = false; updateName($root.Id, $root.Name)">
+                    <img src="~/Resources/Icon_save.ico" />
+                </button>
+            </td>
         </tr>
         <tr>
-            <th>Prezime</th>
-            <td>{{$root.Surname}}</td>
+            <th class="listTableHeader">Prezime</th>
+            <td ng-show="editSurnameMode"><input type="text" ng-model="$root.Surname" /></td>
+            <td ng-hide="editSurnameMode">{{$root.Surname}}</td>
+            <td ng-hide="editSurnameMode">
+                <button ng-click="editSurnameMode=true">
+                    <img src="~/Resources/Icon_edit.ico" />
+                </button>
+            </td>
+            <td ng-show="editSurnameMode">
+                <button ng-show="editSurnameMode" data-ng-click="editSurnameMode = false; updateSurname($root.Id, $root.Surname)">
+                    <img src="~/Resources/Icon_save.ico" />
+                </button>
+            </td>
         </tr>
         <tr>
-            <th>Adresa</th>
-            <td>{{$root.Address}}</td>
+            <th class="listTableHeader">Adresa</th>
+            <td ng-show="editAddressMode"><input type="text" ng-model="$root.Address" /></td>
+            <td ng-hide="editAddressMode">{{$root.Address}}</td>
+            <td  ng-hide="editAddressMode">
+                <button ng-click="editAddressMode=true">
+                    <img src="~/Resources/Icon_edit.ico" />
+                </button>
+            </td>
+            <td ng-show="editAddressMode">
+                <button ng-show="editAddressMode" data-ng-click="editAddressMode = false; updateAddress($root.Id, $root.Address)">
+                    <img src="~/Resources/Icon_save.ico" />
+                </button>
+            </td>
         </tr>
         <tr>
-            <th>E-mail</th>
-            <td><ul data ng-repeat="email in $root.Email"><li>{{email}}</li></ul></td>
+            <th class="listTableHeader">E-mail</th>
+            <td>
+                <table class="listTable">
+                    <tr data-ng-repeat="email in $root.Email">
+                        <td ng-hide="editCurrentMailMode">{{email.Email1}}</td>
+                        <td ng-show="editCurrentMailMode"><input type="text" ng-model="email.Email1" /></td>
+                        <td ng-hide="!editMailsMode || editCurrentMailMode">
+                            <button ng-click="editCurrentMailMode=true">
+                                <img src="~/Resources/Icon_edit.ico" />
+                            </button>
+                        </td>
+                        <td ng-show="editCurrentMailMode">
+                            <button data-ng-click="editCurrentMailMode = false; updateEmail(email)">
+                                <img src="~/Resources/Icon_save.ico" />
+                            </button>
+                        </td>
+                        <td ng-hide="!editMailsMode || editCurrentMailMode">
+                            <button data-ng-click="deleteEmail(email)">
+                                <img src="~/Resources/Icon_delete.ico" />
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td ng-hide="!editMailsMode || addMailMode">
+                            <button ng-click="addMailMode = true">
+                                <img src="~/Resources/Icon_add.ico" />
+                            </button>
+                        </td>
+                        <td ng-show="addMailMode"><input type="text" ng-model="emailToAdd" /></td>
+                        <td>
+                            <button ng-show="addMailMode" data-ng-click="addMailMode = false; addEmail($root.Id, emailToAdd)">
+                                <img src="~/Resources/Icon_save.ico" />
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td ng-hide="editMailsMode">
+                <button ng-click="editMailsMode=true">
+                    <img src="~/Resources/Icon_edit.ico" />
+                </button>
+            </td>
+            <td ng-show="editMailsMode">
+                <button ng-click="editMailsMode=false; editCurrentMailMode=false; addMailMode=false">
+                    <img src="~/Resources/Icon_back.ico" />
+                </button>
+            </td>
         </tr>
         <tr>
-            <th>Broj telefona</th>
-            <td><ul data ng-repeat="tel in $root.Telephone"><li>{{tel}}</li></ul></td>
+            <th class="listTableHeader">Broj telefona</th>
+            <td>
+                <table class="listTable">
+                    <tr data-ng-repeat="tel in $root.Telephone">
+                        <td ng-hide="editCurrentTelephoneMode">{{tel.Telephone1}}</td>
+                        <td ng-show="editCurrentTelephoneMode"><input type="text" ng-model="tel.Telephone1" /></td>
+                        <td ng-hide="!editTelephonesMode || editCurrentTelephoneMode">
+                            <button ng-click="editCurrentTelephoneMode = true">
+                                <img src="~/Resources/Icon_edit.ico" />
+                            </button>
+                        </td>
+                        <td ng-show="editCurrentTelephoneMode">
+                            <button data-ng-click="editCurrentTelephoneMode = false; updateTelephone(tel)">
+                                <img src="~/Resources/Icon_save.ico" />
+                            </button>
+                        </td>
+                        <td ng-hide="!editTelephonesMode || editCurrentTelephoneMode">
+                            <button data-ng-click="deleteTelephone(tel)">
+                                <img src="~/Resources/Icon_delete.ico" />
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td ng-hide="!editTelephonesMode || addTelephoneMode">
+                            <button ng-hide="addTelephoneMode" ng-click="addTelephoneMode = true">
+                                <img src="~/Resources/Icon_add.ico" />
+                            </button>
+                        </td>
+                        <td ng-show="addTelephoneMode"><input type="text" ng-model="telephoneToAdd" /></td>
+                        <td>
+                            <button ng-show="addTelephoneMode" data-ng-click="addTelephoneMode = false; addTelephone($root.Id, telephoneToAdd)">
+                                <img src="~/Resources/Icon_save.ico" />
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td ng-hide="editTelephonesMode">
+                <button ng-click="editTelephonesMode=true">
+                    <img src="~/Resources/Icon_edit.ico" />
+                </button>
+            </td>
+            <td ng-show="editTelephonesMode">
+                <button ng-click="editTelephonesMode=false; editCurrentTelephoneMode=false; addTelephoneMode=false">
+                    <img src="~/Resources/Icon_back.ico" />
+                </button>
+            </td>
         </tr>
         <tr>
-            <th>Tagovi</th>
-            <td><ul data ng-repeat="tag in $root.Tags"><li>{{tag}}</li></ul></td>
+            <th class="listTableHeader">Tagovi</th>
+            <td>
+                <table class="listTable">
+                    <tr data-ng-repeat="tag in $root.Tags">
+                        <td ng-hide="editCurrentTagMode" ng-click="editMode=true">{{tag.Tag1}}</td>
+                        <td ng-show="editCurrentTagMode"><input type="text" ng-model="tag.Tag1" /></td>
+                        <td ng-hide="!editTagsMode || editCurrentTagMode">
+                            <button ng-click="editCurrentTagMode = true">
+                                <img src="~/Resources/Icon_edit.ico" />
+                            </button>
+                        </td>
+                        <td ng-show="editCurrentTagMode">
+                            <button data-ng-click="editCurrentTagMode = false; updateTag(tag)">
+                                <img src="~/Resources/Icon_save.ico" />
+                            </button>
+                        </td>
+                        <td ng-hide="!editTagsMode || editCurrentTagMode">
+                            <button data-ng-click="deleteTag(tag)">
+                                <img src="~/Resources/Icon_delete.ico" />
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td ng-hide="!editTagsMode || addTagMode">
+                            <button ng-click="addTagMode = true">
+                                <img src="~/Resources/Icon_add.ico" />
+                            </button>
+                        </td>
+                        <td ng-show="addTagMode"><input type="text" ng-model="tagToAdd" /></td>
+                        <td>
+                            <button ng-show="addTagMode" data-ng-click="addTagMode = false; addTag($root.Id, tagToAdd)">
+                                <img src="~/Resources/Icon_save.ico" />
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td ng-hide="editTagsMode">
+                <button ng-click="editTagsMode=true">
+                    <img src="~/Resources/Icon_edit.ico" />
+                </button>
+            </td>
+            <td ng-show="editTagsMode">
+                <button ng-click="editTagsMode=false; editCurrentTag=false; addTag=false">
+                    <img src="~/Resources/Icon_back.ico" />
+                </button>
+            </td>
         </tr>
     </table>
 

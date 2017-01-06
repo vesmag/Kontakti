@@ -14,15 +14,13 @@
     <script src="~/Scripts/Controllers/contactController.js"></script>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/Content/Style.css" />
+    <meta name="description" content="Contacts Application" />
 </head>
 <body>
     <h1>Kontakti</h1>
-    @if (Request.Url.ToString().IndexOf("all") == -1 && Request.Url.ToString().IndexOf("contact") == -1)
-    {
         <div class="table_div">
-            <input class="button_all" type="button" onclick="location.href='/#/all' ;" value="Prikaži sve kontakte" />
+            <input class="button_all" type="button" onclick="location.href = '/#/all';" value="Prikaži sve kontakte" />
         </div>
-    }
     <div ng-view class="alles">
 
     </div>

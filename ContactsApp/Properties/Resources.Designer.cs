@@ -73,6 +73,16 @@ namespace ContactsApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
+        internal static System.Drawing.Icon Icon_back {
+            get {
+                object obj = ResourceManager.GetObject("Icon_back", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
         internal static System.Drawing.Icon Icon_delete {
             get {
                 object obj = ResourceManager.GetObject("Icon_delete", resourceCulture);

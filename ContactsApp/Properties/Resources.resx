@@ -121,6 +121,9 @@
   <data name="Icon_add" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icon_add.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Icon_back" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon_back.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Icon_delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icon_delete.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
